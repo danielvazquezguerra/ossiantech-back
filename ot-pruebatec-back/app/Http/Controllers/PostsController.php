@@ -9,7 +9,18 @@ use App\Post;
 
 class PostsController {
 
+    
+    public function register(Request $request)
+    //Creamos el post. 
+    
+    {
+        $body = $request->all();
+        $post = Post::create($body);
+        return response($post, 201);
+    }
+
     public function getPostAll(Request $request)
+    //Obtenemos todos los post. 
 
     {
         try {
@@ -39,6 +50,8 @@ class PostsController {
      */
 
     public function edit($request, $id)
+    //Actualizamos el post. 
+
     {
         
         $post = Post::find($id);
@@ -52,6 +65,8 @@ class PostsController {
     }
 
     public function delete($id)
+    //Borramos el post. 
+
     {
         try {
             $post = Post::find($id);
