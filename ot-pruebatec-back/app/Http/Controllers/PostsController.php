@@ -17,11 +17,12 @@ class PostsController {
         try {
 
             $body = $request->all();
+
             if($request->has('url')){
                 $imageName = time() . '-' . request()->url->getClientOriginalName(); 
                 request()->url->move('images/posts', $imageName); 
                 $body['url'] = $imageName;    
-
+                
             }
 
             $post = Post::create($body);
@@ -44,7 +45,7 @@ class PostsController {
         try {
 
             $posts = Post::all();
-            return response()->json(['posts'=>$posts], 200);
+            return response()->json(['posts'=>$posts], 200);    
 
         } catch (\Exception $e) {
 
