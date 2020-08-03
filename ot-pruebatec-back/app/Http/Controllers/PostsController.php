@@ -10,13 +10,31 @@ use App\Post;
 class PostsController {
 
     
-    public function register(Request $request)
-    //Creamos el post. 
-    
+    public function addPost(Request $request)
+    //Para añadir un el post. 
+        
     {
-        $body = $request->all();
-        $post = Post::create($body);
-        return response($post, 201);
+        try {
+
+            $body = $request->all();
+            if($request->has('url')){
+                $imageName = time() . '-' . request()->url->getClientOriginalName(); 
+                request()->url->move('images/posts', $imageName); 
+                $body['url'] = $imageName;    
+
+            }
+
+            $post = Post::create($body);
+            return response($post, 201);
+
+        } catch (\Exception $e) {
+
+            return response([
+                'message' => 'There was an error trying to register the user',
+                'error' => $e->getMessage()
+            ], 500);
+
+        }
     }
 
     public function getPostAll(Request $request)
@@ -24,8 +42,9 @@ class PostsController {
 
     {
         try {
+
             $posts = Post::all();
-            return response()->json(['data'=>$posts], 200);
+            return response()->json(['posts'=>$posts], 200);
 
         } catch (\Exception $e) {
 
