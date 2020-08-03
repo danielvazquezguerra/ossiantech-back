@@ -65,7 +65,7 @@ class PostsController {
     }
 
     public function delete($id)
-    //Borramos el post. 
+    //Borramos el post.
 
     {
         try {

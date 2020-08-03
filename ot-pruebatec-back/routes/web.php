@@ -1,16 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use GuzzleHttp\Client;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('/pruebatec/{post}', 'PostsController@show');
+
+//Obtenemos los datos desde la Api. 
+
+Route::get('/prueba', function(){
+
+    $client = new Client([
+
+        'base_uri' => 'http://internal.ossian.tech/api/Sample',
+        'timeout'  => 2.0,
+    
+    ]);
+    
+    $response = $client->request('GET');    
+
+    return response()->json(['results'=>$response], 200);
+
+});
