@@ -69,13 +69,13 @@ class PostsController {
      * @return \Illuminate\Http\Response
      */
 
-    public function edit($request, $id)
+    public function edit( Request $request, $id)
     //Actualizamos el post. 
 
     {
-        
         $post = Post::find($id);
-        if($request->has('name')) {
+
+        if($request->has('id')) {
             $post->post = $request->post();
         }
 
