@@ -12,7 +12,6 @@ Route::group([
 ], function () {
 
     Route::get('/all', 'PostsController@getPostAll');
-    // Route::get('/detail/{id}', 'ImagenController@detail');
     Route::post('/add', 'PostsController@addPost');
     Route::put('/update/{id}', 'PostsController@edit');
     Route::delete('/delete/{id}', 'PostsController@delete');

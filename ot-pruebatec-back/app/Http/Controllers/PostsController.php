@@ -19,7 +19,7 @@ class PostsController {
             $body = $request->all();
 
             if($request->has('url')){
-                $imageName = time() . '-' . request()->url->getClientOriginalName(); 
+                $imageName = 'http://localhost:8000/images/posts/' . time() . '-' . request()->url->getClientOriginalName(); 
                 request()->url->move('images/posts', $imageName); 
                 $body['url'] = $imageName;    
                 
@@ -78,24 +78,8 @@ class PostsController {
             
             $post = Post::find($id);
         
-            if ($request->has('title')) {
-                $post->title=$request->title;
-            }
-            if ($request->has('description')) {
-                $post->category=$request->category;
-            }
-            if ($request->has('category')) {
-                $post->description=$request->description;
-            }
-            if($request->has('url')) {
-                $imageName = time() . '-' . request()->url->getClientOriginalName(); 
-                request()->url->move('images/posts', $imageName); 
-                $body['url'] = $imageName;    
-                
-            }
+            $post->update($request->all());
             
-            $post->save();
-        
             return response()->json(['data'=>$post], 201);
 
         }catch (\Exception $exception) {
