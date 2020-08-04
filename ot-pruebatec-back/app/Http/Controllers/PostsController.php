@@ -10,8 +10,8 @@ use App\Post;
 class PostsController {
 
     
-    public function addPost(Request $request)
     //Para añadir un el post. 
+    public function addPost(Request $request)
         
     {
         try {
@@ -38,8 +38,8 @@ class PostsController {
         }
     }
 
-    public function getPostAll(Request $request)
     //Obtenemos todos los post. 
+    public function getPostAll(Request $request)
 
     {
         try {
@@ -69,34 +69,40 @@ class PostsController {
      * @return \Illuminate\Http\Response
      */
 
-    public function edit( Request $request, $id)
     //Actualizamos el post. 
+    public function edit( Request $request, $id)
 
     {
-        $post = Post::find($id);
-
-        if ($request->title) {
-            $post->title=$request->title;
+        
+        try {
             
+            $post = Post::find($id);
+        
+            if ($request->has('title')) {
+                $post->title=$request->title;
+            }
+            if ($request->has('description')) {
+                $post->category=$request->category;
+            }
+            if ($request->has('category')) {
+                $post->description=$request->description;
+            }
+            if($request->has('url')) {
+                $imageName = time() . '-' . request()->url->getClientOriginalName(); 
+                request()->url->move('images/posts', $imageName); 
+                $body['url'] = $imageName;    
+                
+            }
+            
+            $post->save();
+        
+            return response()->json(['data'=>$post], 201);
+
+        }catch (\Exception $exception) {
+
+            return response($exception, 500);
+
         }
-
-        if ($request->description) {
-            $post->description=$request->description;
-        }
-
-        if ($request->category) {
-            $post->category=$request->category;
-        }
-
-        if ($request->url) {
-            $post->url=$request->url;
-        }
-
-       
-
-        $post->save();
-
-        return response()->json(['data'=>$post], 201);
 
     
     }
@@ -109,7 +115,7 @@ class PostsController {
             $post = Post::find($id);
             $post->delete();
             return response([
-                'message' => 'Post eliminado con éxito',
+                'message' => 'Post eliminado',
                 'product' => $post
             ]);
         } catch (\Exception $e) {
