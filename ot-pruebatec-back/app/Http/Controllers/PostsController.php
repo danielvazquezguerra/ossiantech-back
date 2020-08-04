@@ -75,13 +75,30 @@ class PostsController {
     {
         $post = Post::find($id);
 
-        if($request->has('id')) {
-            $post->post = $request->post();
+        if ($request->title) {
+            $post->title=$request->title;
+            
         }
+
+        if ($request->description) {
+            $post->description=$request->description;
+        }
+
+        if ($request->category) {
+            $post->category=$request->category;
+        }
+
+        if ($request->url) {
+            $post->url=$request->url;
+        }
+
+       
 
         $post->save();
 
         return response()->json(['data'=>$post], 201);
+
+    
     }
 
     public function delete($id)
