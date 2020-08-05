@@ -15,6 +15,7 @@ Route::group([
     Route::post('/add', 'PostsController@addPost');
     Route::put('/update/{id}', 'PostsController@edit');
     Route::delete('/delete/{id}', 'PostsController@delete');
+    Route::get('/id/{id}', 'PostsController@detail');
 
 });
 

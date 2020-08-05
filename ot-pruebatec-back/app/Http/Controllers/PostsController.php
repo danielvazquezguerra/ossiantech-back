@@ -91,6 +91,17 @@ class PostsController {
     
     }
 
+    public function detail($id)
+
+    {
+        try {
+            $post = Post::where('id', '=', $id)->first();
+            return response($post, 201);
+        } catch (\Exception $exception) {
+            return response($exception, 500);
+        }
+    }
+
     public function delete($id)
     //Borramos el post.
 
