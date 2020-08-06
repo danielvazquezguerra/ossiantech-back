@@ -27,6 +27,7 @@ class PostsController {
 
             $post = Post::create($body);
             return response($post, 201);
+            
 
         } catch (\Exception $e) {
 
